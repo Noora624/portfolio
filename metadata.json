@@ -1,0 +1,6 @@
+{
+  "name": "Noora Portfolio",
+  "description": "A dark futuristic, premium glassmorphic portfolio hero section for Noora, B.Tech CSE (Data Science) student, featuring interactive floating skill icons, animated counters, and particle effects.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
