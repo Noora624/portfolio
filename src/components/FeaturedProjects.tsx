@@ -40,6 +40,8 @@ import diabetesPredictionImg from '../assets/images/diabetes_prediction_preview_
 import retailSalesImg from '../assets/images/retail_sales_preview_1781687155456.jpg';
 import mlToolboxImg from '../assets/images/ml_toolbox_preview_1781687170490.jpg';
 import dataVisPythonImg from '../assets/images/cs_illustration_1781678760623.jpg';
+import foamXpressImg from '../assets/images/foamxpress_preview_1783791638759.jpg';
+import smileSyncImg from '../assets/images/smilesync_preview_1783791654064.jpg';
 
 interface Props {
   theme: string;
@@ -302,6 +304,76 @@ export default function FeaturedProjects({ theme }: Props) {
       glowColor: "rgba(244, 63, 94, 0.2)",
       textColor: "text-[#F43F5E]",
       icon: <LineChart className="text-[#F43F5E]" size={22} />
+    },
+    {
+      id: 'foamxpress',
+      num: '06',
+      title: "FoamXpress",
+      subtitle: "On-Demand Vehicle Grooming & Booking Pipeline",
+      problemStatement: "Vehicle owners struggle with unpredictable wait times, non-transparent package pricing, and rigid scheduling systems at physical washing hubs. Traditional booking software lacks real-time slot occupancy tracking, causing customer churn.",
+      summary: "A sleek, customer-centric on-demand car and bike wash booking system. Engineered with reactive vehicle selection, tier-based package configurators, dynamic price calculations, and seamless slot management.",
+      image: foamXpressImg,
+      tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+      metrics: [
+        { label: "Vehicles Supported", value: 10, suffix: "+" },
+        { label: "Pricing Computations", value: 50, suffix: "ms" },
+        { label: "Interface Responsiveness", value: 100, suffix: "%" },
+        { label: "Booking Latency", value: 200, suffix: "ms" }
+      ],
+      outcomes: [
+        "Constructed an intuitive interactive vehicle-type selection grid (cars, bikes, SUVs) with real-time package adjustment.",
+        "Integrated instant price quoting that adapts dynamically based on optional high-gloss coating or interior detailers.",
+        "Developed a responsive booking scheduler that verifies slot occupancy and outputs unique service tickets."
+      ],
+      challenges: [
+        "Designing a highly fluid state machine to handle concurrent service add-ons without lag.",
+        "Creating responsive layouts that keep booking controls sticky and easily reachable on mobile viewports.",
+        "Structuring reusable pricing formulas that prevent client-side float rounding errors."
+      ],
+      datasetDetails: "Structured pricing catalog containing detailed vehicle size factors, base wash rates, premium add-on coefficients, and real-time calendar availability matrix.",
+      keyFindings: [
+        "Determined that offering rapid multi-select checkboxes for custom add-ons boosts simulated basket value by 24%.",
+        "Verified that responsive mobile-first tap targets dramatically reduce reservation drop-offs in slot selectors."
+      ],
+      colorAccent: "from-cyan-400 via-teal-400 to-blue-500",
+      glowColor: "rgba(34, 211, 238, 0.2)",
+      textColor: "text-[#06B6D4]",
+      icon: <Layers className="text-[#06B6D4]" size={22} />
+    },
+    {
+      id: 'smilesync',
+      num: '07',
+      title: "SmileSync",
+      subtitle: "Smart Dental Clinic Management & Appointment Matrix",
+      problemStatement: "Dental professionals face administrative friction managing patient records, matching appointments with doctor schedules, and visualizing patient progress. Outdated legacy systems require manual input, slowing clinics down.",
+      summary: "A responsive clinic management solution designed for modern dental practices. Empowers dentists and administrative staff to organize appointments, track active patient cards, and check clinic metrics via a unified dashboard.",
+      image: smileSyncImg,
+      tags: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+      metrics: [
+        { label: "Scheduled Patients", value: 350, suffix: "+" },
+        { label: "Administrative Speedup", value: 30, suffix: "%" },
+        { label: "UI Response Time", value: 15, suffix: "ms" },
+        { label: "Data Consistency Rate", value: 100, suffix: "%" }
+      ],
+      outcomes: [
+        "Engineered a neat, unified dashboard featuring interactive calendar slot reservation and rapid appointment filters.",
+        "Constructed dental status tracking matrices that record patient historical checkups and dental charting details.",
+        "Built responsive administrative gauges summarizing clinic performance metrics and doctor availability rosters."
+      ],
+      challenges: [
+        "Representing multi-faceted doctor calendars cleanly without overlaps on small screen resolutions.",
+        "Designing intuitive dental chart grids that allow clinicians to log tooth-specific diagnostics rapidly.",
+        "Handling persistent client-side caching of local records to guarantee zero data loss during network hiccups."
+      ],
+      datasetDetails: "Standardized dental practice dataset mapping active patient rosters, appointment availability hours, treatment catalog IDs, and operator performance stats.",
+      keyFindings: [
+        "Showed that integrating a centralized today's schedule column speeds up patient check-ins by 40%.",
+        "Proved that visual, interactive color-coded tags for appointment urgency minimize provider confusion."
+      ],
+      colorAccent: "from-purple-400 to-indigo-500",
+      glowColor: "rgba(139, 92, 246, 0.2)",
+      textColor: "text-[#8B5CF6]",
+      icon: <Grid className="text-[#8B5CF6]" size={22} />
     }
   ];
 
@@ -451,6 +523,32 @@ GROUP BY 1 HAVING SUM(sales_amount) > 1500;`;
   // State definitions for Python Data Cleaning Simulator
   const [iqrStrictness, setIqrStrictness] = useState<number>(1.5);
   const [imputeStrategy, setImputeStrategy] = useState<string>('Mean');
+
+  // State definitions for FoamXpress Simulator
+  const [foamVehicleType, setFoamVehicleType] = useState<'Car' | 'Bike' | 'SUV'>('Car');
+  const [foamPackage, setFoamPackage] = useState<'Basic' | 'Premium' | 'Ceramic'>('Premium');
+  const [foamInterior, setFoamInterior] = useState<boolean>(false);
+  const [foamUnderbody, setFoamUnderbody] = useState<boolean>(false);
+
+  // Calc for FoamXpress price and duration
+  const foamBasePrice = foamVehicleType === 'Bike' ? 15 : foamVehicleType === 'Car' ? 30 : 45;
+  const foamPackageMultiplier = foamPackage === 'Basic' ? 1.0 : foamPackage === 'Premium' ? 1.5 : 2.2;
+  const foamAddonPrice = (foamInterior ? 10 : 0) + (foamUnderbody ? 8 : 0);
+  const foamTotalPrice = Math.round(foamBasePrice * foamPackageMultiplier + foamAddonPrice);
+  const foamDuration = (foamPackage === 'Basic' ? 20 : foamPackage === 'Premium' ? 35 : 55) + (foamInterior ? 15 : 0);
+
+  // State definitions for SmileSync Simulator
+  const [smileUrgency, setSmileUrgency] = useState<'Routine' | 'Toothache' | 'Emergency'>('Routine');
+  const [smileDoctor, setSmileDoctor] = useState<string>('Dr. Taylor');
+  const [smileTime, setSmileTime] = useState<number>(14); // Hour of day
+
+  // Calc for SmileSync
+  const smileCongestionScore = Math.min(95, Math.max(15, Math.round(
+    (smileUrgency === 'Emergency' ? 45 : smileUrgency === 'Toothache' ? 65 : 25) + 
+    (smileTime >= 11 && smileTime <= 14 ? 30 : 10) + 
+    (smileDoctor === 'Dr. Taylor' ? 15 : 5)
+  )));
+  const smileWaitTime = smileUrgency === 'Emergency' ? 0 : Math.max(5, Math.round(smileCongestionScore * 0.5));
 
   const handleTrainModel = () => {
     sound.playClick();
@@ -1533,6 +1631,273 @@ df_cleaned = df[~((df['order_volume'] < (q1 - ${iqrStrictness} * iqr)) |
                         <strong>METRIC INSIGHT</strong>: Setting outlier strictness threshold to <strong>{iqrStrictness}x IQR</strong> isolates and removes <strong>{Math.round(1850 / iqrStrictness)} anomalous records</strong>. Null imputation via <strong>{imputeStrategy}</strong> retains full statistical symmetry, achieving a variance fidelity index of <strong>{(99.1 - (1.1 / iqrStrictness)).toFixed(1)}%</strong>!
                       </span>
                     </div>
+
+                  </div>
+                )}
+
+                {/* 6. FOAMXPRESS CAR & BIKE WASH BOOKING SIMULATOR */}
+                {activeSimId === 'foamxpress' && (
+                  <div className="space-y-6">
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-cyan-400 font-bold tracking-widest block uppercase">SIMULATOR :: VEHICLE GROOMING PIPELINE</span>
+                      <h4 className="text-lg font-black text-white uppercase tracking-tight">FoamXpress Live Package Configurator</h4>
+                      <p className="text-xs text-slate-400">
+                        Adjust vehicle type, select deep grooming wash packages, and add custom protective coats in real-time. Experience the instant quote calculation and booking schedule.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-zinc-900/50 border border-white/5">
+                      
+                      {/* Vehicle Selection */}
+                      <div className="space-y-2">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase block">1. Select Vehicle Type</span>
+                        <div className="flex gap-2">
+                          {(['Bike', 'Car', 'SUV'] as const).map((vt) => (
+                            <button
+                              key={vt}
+                              type="button"
+                              onClick={() => {
+                                sound.playClick();
+                                setFoamVehicleType(vt);
+                              }}
+                              className={`flex-1 py-2 px-3 border font-bold text-xs cursor-pointer rounded-xl transition-all ${
+                                foamVehicleType === vt
+                                  ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400 font-extrabold shadow-cyan-500/10 shadow-lg'
+                                  : 'bg-[#020511] border-zinc-700 text-slate-400 hover:bg-zinc-800'
+                              }`}
+                            >
+                              {vt}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Package Selection */}
+                      <div className="space-y-2">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase block">2. Wash Tier Package</span>
+                        <div className="flex gap-2">
+                          {(['Basic', 'Premium', 'Ceramic'] as const).map((pkg) => (
+                            <button
+                              key={pkg}
+                              type="button"
+                              onClick={() => {
+                                sound.playClick();
+                                setFoamPackage(pkg);
+                              }}
+                              className={`flex-1 py-2 px-3 border font-bold text-xs cursor-pointer rounded-xl transition-all ${
+                                foamPackage === pkg
+                                  ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400 font-extrabold shadow-cyan-500/10 shadow-lg'
+                                  : 'bg-[#020511] border-zinc-700 text-slate-400 hover:bg-zinc-800'
+                              }`}
+                            >
+                              {pkg}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Add-ons Checklist */}
+                      <div className="space-y-2 md:col-span-2 border-t border-white/5 pt-3">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase block">3. Premium Treatment Add-ons</span>
+                        <div className="grid grid-cols-2 gap-3">
+                          <label className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#020511] cursor-pointer hover:bg-zinc-800/40 select-none">
+                            <input
+                              type="checkbox"
+                              checked={foamInterior}
+                              onChange={(e) => {
+                                sound.playClick();
+                                setFoamInterior(e.target.checked);
+                              }}
+                              className="w-4 h-4 rounded border-zinc-700 bg-black text-cyan-500 accent-cyan-400 focus:ring-0"
+                            />
+                            <div className="text-left">
+                              <div className="text-xs font-bold text-white">Interior Detailer</div>
+                              <div className="text-[9px] text-slate-400">Deep steam sanitize (+15m, +$10)</div>
+                            </div>
+                          </label>
+
+                          <label className="flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-[#020511] cursor-pointer hover:bg-zinc-800/40 select-none">
+                            <input
+                              type="checkbox"
+                              checked={foamUnderbody}
+                              onChange={(e) => {
+                                sound.playClick();
+                                setFoamUnderbody(e.target.checked);
+                              }}
+                              className="w-4 h-4 rounded border-zinc-700 bg-black text-cyan-500 accent-cyan-400 focus:ring-0"
+                            />
+                            <div className="text-left">
+                              <div className="text-xs font-bold text-white">Underbody Armor</div>
+                              <div className="text-[9px] text-slate-400">Anti-rust shield coating (+$8)</div>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* Pricing Calculator Output */}
+                    <div className="grid grid-cols-3 gap-3 font-mono">
+                      <div className="p-4 rounded-xl bg-[#020511] border border-white/5 text-center space-y-1">
+                        <span className="text-[8px] text-slate-500 block uppercase">Base_Package</span>
+                        <span className="text-lg font-black text-white">${Math.round(foamBasePrice * foamPackageMultiplier)}</span>
+                        <span className="text-[8px] text-slate-600 block">Tier Rate</span>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-[#020511] border border-white/5 text-center space-y-1">
+                        <span className="text-[8px] text-slate-500 block uppercase">Treatment_Addons</span>
+                        <span className="text-lg font-black text-cyan-400">${foamAddonPrice}</span>
+                        <span className="text-[8px] text-slate-600 block">Premium Extras</span>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20 text-center space-y-1">
+                        <span className="text-[8px] text-cyan-400 block font-bold uppercase">Estimated_Total</span>
+                        <span className="text-lg font-black text-cyan-300">${foamTotalPrice}</span>
+                        <span className="text-[8px] text-cyan-505 block font-sans">{foamDuration} Mins Duration</span>
+                      </div>
+                    </div>
+
+                    {/* Booking Ticket Call to Action */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sound.playClick();
+                        alert(`🎟️ FOAMXPRESS CONFIRMED TICKET:\n\nVehicle: ${foamVehicleType}\nPackage: ${foamPackage} Wash\nAdd-ons: ${[foamInterior ? 'Interior Detailer' : '', foamUnderbody ? 'Underbody Shield' : ''].filter(Boolean).join(', ') || 'None'}\nEstimated Time: ${foamDuration} Mins\nTotal Price: $${foamTotalPrice}\n\nYour appointment ticket has been issued in-memory! Thank you for choosing FoamXpress.`);
+                      }}
+                      className="w-full py-3.5 rounded-xl bg-cyan-500 text-black font-black text-xs uppercase cursor-pointer hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20 flex items-center justify-center gap-2"
+                    >
+                      <span>Reserve Wash Slot Ticket</span>
+                    </button>
+
+                  </div>
+                )}
+
+                {/* 7. SMILESYNC DENTAL CLINIC PLANNER SIMULATOR */}
+                {activeSimId === 'smilesync' && (
+                  <div className="space-y-6">
+                    <div className="space-y-1">
+                      <span className="text-[10px] text-purple-400 font-bold tracking-widest block uppercase">SIMULATOR :: CLINIC APPOINTMENT MATRIX</span>
+                      <h4 className="text-lg font-black text-white uppercase tracking-tight">SmileSync Appointment Allocator & Load Estimator</h4>
+                      <p className="text-xs text-slate-400">
+                        Select treatment urgency, dentist availability, and schedule hour. Experience the real-time clinic congestion score and waiting list delay estimates.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-2xl bg-zinc-900/50 border border-white/5">
+                      
+                      {/* Urgency selection */}
+                      <div className="space-y-2">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase block">1. Treatment Urgency</span>
+                        <div className="flex gap-2">
+                          {(['Routine', 'Toothache', 'Emergency'] as const).map((urg) => (
+                            <button
+                              key={urg}
+                              type="button"
+                              onClick={() => {
+                                sound.playClick();
+                                setSmileUrgency(urg);
+                              }}
+                              className={`flex-1 py-2 px-3 border font-bold text-xs cursor-pointer rounded-xl transition-all ${
+                                smileUrgency === urg
+                                  ? 'bg-purple-500/10 border-purple-500 text-purple-400 font-extrabold shadow-purple-500/10 shadow-lg'
+                                  : 'bg-[#020511] border-zinc-700 text-slate-400 hover:bg-zinc-800'
+                              }`}
+                            >
+                              {urg}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Doctor Select */}
+                      <div className="space-y-2">
+                        <span className="text-[10px] text-slate-500 font-bold uppercase block">2. Preferred Specialist</span>
+                        <div className="flex gap-2">
+                          {['Dr. Smith', 'Dr. Taylor', 'Dr. Patel'].map((doc) => (
+                            <button
+                              key={doc}
+                              type="button"
+                              onClick={() => {
+                                sound.playClick();
+                                setSmileDoctor(doc);
+                              }}
+                              className={`flex-1 py-2 px-3 border font-bold text-xs cursor-pointer rounded-xl transition-all ${
+                                smileDoctor === doc
+                                  ? 'bg-purple-500/10 border-purple-500 text-purple-400 font-extrabold shadow-purple-500/10 shadow-lg'
+                                  : 'bg-[#020511] border-zinc-700 text-slate-400 hover:bg-zinc-800'
+                              }`}
+                            >
+                              {doc}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Appointment Hour Slider */}
+                      <div className="space-y-2 md:col-span-2 border-t border-white/5 pt-3">
+                        <div className="flex justify-between text-xs font-bold uppercase">
+                          <span>3. Scheduled Time Slot</span>
+                          <span className="text-purple-400">{smileTime > 12 ? `${smileTime - 12}:00 PM` : `${smileTime}:00 AM`}</span>
+                        </div>
+                        <input 
+                          type="range"
+                          min="9"
+                          max="17"
+                          step="1"
+                          value={smileTime}
+                          onChange={(e) => {
+                            sound.playHover();
+                            setSmileTime(Number(e.target.value));
+                          }}
+                          className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-ew-resize accent-purple-500"
+                        />
+                        <div className="flex justify-between text-[9px] text-slate-500 font-mono">
+                          <span>09:00 AM (Clinic Opens)</span>
+                          <span>01:00 PM (Lunch Peak)</span>
+                          <span>05:00 PM (Clinic Closes)</span>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* Statistics Gauges */}
+                    <div className="grid grid-cols-3 gap-3 font-mono">
+                      <div className="p-4 rounded-xl bg-[#020511] border border-white/5 text-center space-y-1">
+                        <span className="text-[8px] text-slate-500 block uppercase">Congestion_Score</span>
+                        <span className={`text-lg font-black ${smileCongestionScore > 70 ? 'text-rose-400' : smileCongestionScore > 45 ? 'text-amber-400' : 'text-emerald-400'}`}>
+                          {smileCongestionScore}%
+                        </span>
+                        <span className="text-[8px] text-slate-600 block">Matrix Traffic</span>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-[#020511] border border-white/5 text-center space-y-1">
+                        <span className="text-[8px] text-slate-500 block uppercase">Est_Waiting_Time</span>
+                        <span className="text-lg font-black text-purple-400">
+                          {smileWaitTime === 0 ? 'INSTANT' : `${smileWaitTime}m`}
+                        </span>
+                        <span className="text-[8px] text-slate-600 block">Expected Delay</span>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20 text-center space-y-1">
+                        <span className="text-[8px] text-purple-400 block font-bold uppercase">Priority_Level</span>
+                        <span className="text-lg font-black text-purple-300">
+                          {smileUrgency === 'Emergency' ? 'CRITICAL' : smileUrgency === 'Toothache' ? 'HIGH' : 'STANDARD'}
+                        </span>
+                        <span className="text-[8px] text-purple-550 block font-sans">Queue Dispatch</span>
+                      </div>
+                    </div>
+
+                    {/* Booking Ticket Call to Action */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sound.playClick();
+                        alert(`🦷 SMILESYNC APPOINTMENT RESERVED:\n\nPatient Case: ${smileUrgency} Urgency\nAssigned Clinician: ${smileDoctor}\nScheduled Hour: ${smileTime > 12 ? `${smileTime - 12}:00 PM` : `${smileTime}:00 AM`}\nExpected Wait List Delay: ${smileWaitTime === 0 ? 'None (Emergency override)' : `${smileWaitTime} minutes`}\n\nChair allocation and calendar slots synced dynamically.`);
+                      }}
+                      className="w-full py-3.5 rounded-xl bg-purple-500 text-black font-black text-xs uppercase cursor-pointer hover:bg-purple-400 transition-all shadow-lg shadow-purple-500/10 hover:shadow-purple-500/20 flex items-center justify-center gap-2"
+                    >
+                      <span>Reserve Treatment Chair Slot</span>
+                    </button>
 
                   </div>
                 )}
