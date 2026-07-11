@@ -127,7 +127,7 @@ export const STATISTICS: StatItem[] = [
   {
     id: 'projects',
     label: 'Key Projects',
-    value: 5,
+    value: 7,
     suffix: '+',
     iconName: 'Briefcase'
   },
@@ -182,6 +182,20 @@ export const EXPERIENCE_PROJECTS: AcademicProject[] = [
     title: 'Predictive Price Evaluator',
     description: 'Created a multivariable linear regression analyzer model predicting estate value points. Integrated data standardization procedures to minimize outliers.',
     tech: ['Python', 'Seaborn', 'Scipy', 'Pandas']
+  },
+  {
+    id: 'proj6',
+    category: 'Web Application',
+    title: 'FoamXpress',
+    description: 'A modern Car & Bike Wash booking platform where users can select vehicle type, choose services, view pricing, and make bookings through a responsive interface.',
+    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS']
+  },
+  {
+    id: 'proj7',
+    category: 'Web Application',
+    title: 'SmileSync',
+    description: 'A smart dental clinic management system that allows appointment booking, patient management, and provides a clean, responsive UI for dental professionals and patients alike.',
+    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS']
   }
 ];
 
