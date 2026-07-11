@@ -108,6 +108,8 @@ export default function ProjectsModal({ isOpen, onClose }: ProjectsModalProps) {
                       proj3: { dataset: 'Custom Image Matrix', metric: 'Val Accuracy', score: '94.7%' },
                       proj4: { dataset: 'Simulated KPI Stream', metric: 'HMR Latency', score: '< 4ms' },
                       proj5: { dataset: 'Multi-variable Housing Data', metric: 'R-Squared Score', score: '0.915' },
+                      proj6: { dataset: 'Vehicle wash catalog DB', metric: 'Booking Latency', score: '< 200ms' },
+                      proj7: { dataset: 'Dentist schedule matrix', metric: 'Appt Filter Speed', score: '15ms' },
                     };
 
                     return (
