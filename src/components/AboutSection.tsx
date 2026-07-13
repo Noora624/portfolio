@@ -492,7 +492,7 @@ export default function AboutSection({ theme = 'dark' }: AboutSectionProps) {
 
               {/* Opportunities list container with tags */}
               <div className="flex flex-wrap gap-2 lg:max-w-md justify-start lg:justify-end">
-                {['Data Science', 'Machine Learning', 'Data Analytics', 'Python Development'].map((tag, i) => (
+                {['Data Science', 'Machine Learning', 'Data Analytics', 'Python Development', 'Software Development'].map((tag, i) => (
                   <span 
                     key={i}
                     className={`text-[10px] sm:text-xs font-mono px-3.5 py-2 rounded-full transition-all border ${
