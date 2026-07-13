@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Briefcase, 
-  Award, 
-  Cpu, 
-  GraduationCap, 
-  MapPin, 
-  Calendar, 
-  ArrowRight, 
-  Download, 
-  Mail, 
-  Sparkles, 
-  ChevronRight, 
-  Compass, 
+import {
+  Briefcase,
+  Award,
+  Cpu,
+  GraduationCap,
+  MapPin,
+  Calendar,
+  ArrowRight,
+  Download,
+  Mail,
+  Sparkles,
+  ChevronRight,
+  Compass,
   ShieldAlert,
   Sliders,
   CheckCircle2,
@@ -27,7 +27,7 @@ import {
   Linkedin
 } from 'lucide-react';
 
-import avatarImg from './assets/images/avatar.png';
+import avatarImg from './assets/imga.png';
 import { SKILL_NODES, STATISTICS } from './data';
 import ParticleBackground from './components/ParticleBackground';
 import AnimatedCounter from './components/AnimatedCounter';
@@ -68,7 +68,6 @@ const heroItemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.16, 1, 0.3, 1], // premium custom cubic-bezier for a very slick slide-up feel
     },
   },
 };
@@ -87,9 +86,8 @@ export default function App() {
   const [activeSkill, setActiveSkill] = useState<string | null>(SKILL_NODES[0].id); // default to first skill
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => sound.isEnabled());
 
-  // Hovering skill node and avatar state for data packet traveling animations
+  // Hovering skill node state for data packet traveling animations
   const [hoveredSkillNode, setHoveredSkillNode] = useState<string | null>(null);
-  const [isAvatarHovered, setIsAvatarHovered] = useState(false);
 
   // Holographic 3D Stage Controller States (Disabled by default to prevent animation lag)
   const [stageTiltX, setStageTiltX] = useState<number>(0);
@@ -513,7 +511,7 @@ export default function App() {
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-[10px] tracking-wider transition-all cursor-pointer ${
                   isDark 
                     ? 'bg-white/5 border-white/10 text-slate-400 hover:text-white hover:border-white/20' 
-                    : 'bg-slate-200/60 border-slate-300 text-slate-700 hover:text-slate-905" hover:border-slate-400'
+                    : 'bg-slate-200/60 border-slate-300 text-slate-700 hover:text-slate-900 hover:border-slate-400'
                 }`}
                 title="Toggle Theme"
               >
@@ -782,10 +780,10 @@ export default function App() {
 
           </motion.div>
 
-          {/* RIGHT COLUMN: REVOLVING CYBER AVATAR & STARBURST SKILL BLOCKS */}
+          {/* RIGHT COLUMN: REVOLVING CYBER PROFILE STAGE & STARBURST SKILL BLOCKS */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center pt-8 lg:pt-0">
             
-            {/* The Avatar Stage Container */}
+            {/* The Holographic Stage Container */}
             <div 
               style={{
                 transform: `perspective(1000px) rotateX(${stageTiltX}deg) rotateY(${stageTiltY}deg)`,
@@ -856,7 +854,7 @@ export default function App() {
                       : (isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)');
 
                     const isHovered = hoveredSkillNode === node.id;
-                    const showPackets = isSelected || isHovered || isAvatarHovered;
+                    const showPackets = isSelected || isHovered;
 
                     return (
                       <g key={node.id}>
@@ -870,10 +868,10 @@ export default function App() {
                           transition={isSelected ? { repeat: Infinity, duration: 1.2, ease: 'linear' } : {}}
                           strokeDasharray={isSelected ? '6 4' : 'none'}
                         />
-                        {/* Subtle 'data packet' animation effect between the skill nodes and the central avatar */}
+                        {/* Subtle 'data packet' animation effect between the skill nodes and the central stage */}
                         {showPackets && (
                           <g id={`data-packets-${node.id}`}>
-                            {/* Packet 1: Travelling from Avatar to Skill Node */}
+                            {/* Packet 1: Travelling from Stage Center to Skill Node */}
                             <g>
                               <motion.circle
                                 r="4"
@@ -885,7 +883,7 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: (isHovered || isAvatarHovered) ? 0.9 : 2.0,
+                                  duration: isHovered ? 0.9 : 2.0,
                                   ease: 'linear',
                                   delay: 0,
                                 }}
@@ -899,14 +897,14 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: (isHovered || isAvatarHovered) ? 0.9 : 2.0,
+                                  duration: isHovered ? 0.9 : 2.0,
                                   ease: 'linear',
                                   delay: 0,
                                 }}
                               />
                             </g>
 
-                            {/* Packet 2: Travelling from Skill Node to Avatar */}
+                            {/* Packet 2: Travelling from Skill Node to Stage Center */}
                             <g>
                               <motion.circle
                                 r="4"
@@ -918,7 +916,7 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: (isHovered || isAvatarHovered) ? 1.1 : 2.4,
+                                  duration: isHovered ? 1.1 : 2.4,
                                   ease: 'linear',
                                   delay: 0.4,
                                 }}
@@ -932,7 +930,7 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: (isHovered || isAvatarHovered) ? 1.1 : 2.4,
+                                  duration: isHovered ? 1.1 : 2.4,
                                   ease: 'linear',
                                   delay: 0.4,
                                 }}
@@ -940,7 +938,7 @@ export default function App() {
                             </g>
 
                             {/* Packet 3 (Hover active high-speed extra particle) */}
-                            {(isHovered || isAvatarHovered) && (
+                            {isHovered && (
                               <g>
                                 <motion.circle
                                   r="4.5"
@@ -981,43 +979,17 @@ export default function App() {
                 </svg>
               </div>
 
-              {/* Dynamic spinning backdrop glow behind the avatar */}
-              <div className="absolute inset-10 bg-gradient-to-tr from-[#00E5FF]/20 via-[#8B5CF6]/20 to-[#EC4899]/20 rounded-full animate-spin-reverse opacity-45 blur-3xl pointer-events-none" />
-
-              {/* Triple-layer animated custom portrait ring & glow frame */}
-              <div className="absolute inset-[-14px] bg-gradient-to-tr from-[#00E5FF] via-[#8B5CF6] to-[#EC4899] rounded-full opacity-35 blur-3xl pointer-events-none animate-pulse-slow"></div>
-
-              {/* Central Floating Portrait Ring */}
-              <motion.div
-                id="central-avatar-ring"
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
-                onMouseEnter={() => setIsAvatarHovered(true)}
-                onMouseLeave={() => setIsAvatarHovered(false)}
-                className="relative z-10 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full flex items-center justify-center p-[8px] transition-shadow duration-500 shadow-[0_0_50px_rgba(0,229,255,0.22),0_0_50px_rgba(236,72,153,0.22)] hover:shadow-[0_0_70px_rgba(0,229,255,0.45),0_0_70px_rgba(236,72,153,0.45)] group/avatar"
-              >
-                {/* Outer Ring: Neon Cyan */}
-                <div className="absolute inset-0 rounded-full border-2 border-[#00E5FF]/70 animate-spin-slow opacity-90" style={{ animationDuration: '24s' }} />
-                
-                {/* Middle Ring: Vibrant Purple */}
-                <div className="absolute inset-[3px] rounded-full border border-dashed border-[#8B5CF6]/85 animate-spin-reverse opacity-85" style={{ animationDuration: '16s' }} />
-                
-                {/* Inner Ring: Neon Pink */}
-                <div className="absolute inset-[6px] rounded-full border-2 border-[#EC4899]/80 animate-spin-slow opacity-95" style={{ animationDuration: '12s' }} />
-                
-                <div className={`w-full h-full rounded-full overflow-hidden relative border-2 ${isDark ? 'bg-slate-950 border-[#050816]' : 'bg-slate-100 border-slate-200'}`}>
+              {/* Circular Avatar Container */}
+              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+                <div className="relative w-[52%] h-[52%] max-w-[220px] max-h-[220px] rounded-full overflow-hidden border border-white/15 shadow-[0_0_32px_rgba(255,255,255,0.08)] bg-slate-950/15 flex items-center justify-center">
                   <img
-                    id="noora-avatar-img"
                     src={avatarImg}
-                    alt="Noora Avatar"
-                    className="w-full h-full object-cover select-none pointer-events-none scale-102 group-hover/avatar:scale-108 transition-all duration-700 font-sans"
-                    referrerPolicy="no-referrer"
+                    alt="Avatar"
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: 'center center' }}
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-t via-black/10 to-transparent ${isDark ? 'from-black/60' : 'from-black/30'}`} />
-                  {/* Digital HUD scanline sweep overlay */}
-                  <div className="absolute inset-0 bg-[linear-gradient(rgba(0,229,255,0.05)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-15 pointer-events-none" />
                 </div>
-              </motion.div>
+              </div>
 
               {/* Surrounding Skill Nodes (Absolute positioned in circle) */}
               <div className="absolute inset-0 w-full h-full pointer-events-none z-20">
