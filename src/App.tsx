@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import {
-  Briefcase,
-  Award,
-  Cpu,
-  GraduationCap,
-  MapPin,
-  Calendar,
-  ArrowRight,
-  Download,
-  Mail,
-  Sparkles,
-  ChevronRight,
-  Compass,
+import { motion, AnimatePresence, type Variants } from 'motion/react';
+import { 
+  Briefcase, 
+  Award, 
+  Cpu, 
+  GraduationCap, 
+  MapPin, 
+  Calendar, 
+  ArrowRight, 
+  Download, 
+  Mail, 
+  Sparkles, 
+  ChevronRight, 
+  Compass, 
   ShieldAlert,
   Sliders,
   CheckCircle2,
@@ -27,7 +27,7 @@ import {
   Linkedin
 } from 'lucide-react';
 
-import avatarImg from './assets/imga.png';
+import avatarImg from './assets/images/avatar.png';
 import { SKILL_NODES, STATISTICS } from './data';
 import ParticleBackground from './components/ParticleBackground';
 import AnimatedCounter from './components/AnimatedCounter';
@@ -36,6 +36,7 @@ import Icon from './components/Icon';
 import AboutSection from './components/AboutSection';
 import DataScienceWorkbench from './components/DataScienceWorkbench';
 import DataScienceIntelligenceHub from './components/DataScienceIntelligenceHub';
+import FullStackDevelopmentSection from './components/FullStackDevelopmentSection';
 import FeaturedProjects from './components/FeaturedProjects';
 import ExperienceJourney from './components/ExperienceJourney';
 import CertificationVault from './components/CertificationVault';
@@ -61,13 +62,14 @@ const heroContainerVariants = {
   },
 };
 
-const heroItemVariants = {
+const heroItemVariants: Variants = {
   hidden: { opacity: 0, y: 25 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.6,
+      ease: [0.16, 1, 0.3, 1], // premium custom cubic-bezier for a very slick slide-up feel
     },
   },
 };
@@ -86,8 +88,9 @@ export default function App() {
   const [activeSkill, setActiveSkill] = useState<string | null>(SKILL_NODES[0].id); // default to first skill
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => sound.isEnabled());
 
-  // Hovering skill node state for data packet traveling animations
+  // Hovering skill node and avatar state for data packet traveling animations
   const [hoveredSkillNode, setHoveredSkillNode] = useState<string | null>(null);
+  const [isAvatarHovered, setIsAvatarHovered] = useState(false);
 
   // Holographic 3D Stage Controller States (Disabled by default to prevent animation lag)
   const [stageTiltX, setStageTiltX] = useState<number>(0);
@@ -159,11 +162,14 @@ export default function App() {
   const selectedSkillNode = SKILL_NODES.find(s => s.id === activeSkill) || SKILL_NODES[0];
 
   const animatedRoles = [
-    '• Data Science Student',
-    '• Aspiring Data Analyst',
-    '• Python Developer',
-    '• Machine Learning Enthusiast',
-    '• Future AI Specialist'
+    '• B.Tech CSE Data Science Student',
+    '• Data Analyst',
+    '• Full Stack Developer',
+    '• Frontend Developer',
+    '• React Developer',
+    '• Data Science Enthusiast',
+    '• Software Developer',
+    '• Python Developer'
   ];
 
   // Sounds Triggers
@@ -238,6 +244,54 @@ export default function App() {
                 : 'text-emerald-850 font-extrabold') 
             : (isDark ? 'text-slate-400' : 'text-slate-600')
         };
+      case 'react':
+        return {
+          glow: isSelected 
+            ? 'shadow-[0_0_20px_rgba(6,182,212,0.45)] border-cyan-400/60 bg-cyan-400/10' 
+            : `${baseBorder} hover:border-cyan-400/50 ${hoverBg}`,
+          iconColor: isDark ? 'text-cyan-300 drop-shadow-[0_0_6px_rgba(6,182,212,0.4)]' : 'text-cyan-700 font-bold',
+          tagColor: isSelected 
+            ? (isDark 
+                ? 'text-cyan-200 font-bold drop-shadow-[0_0_6px_rgba(6,182,212,0.5)]' 
+                : 'text-cyan-800 font-extrabold') 
+            : (isDark ? 'text-slate-400' : 'text-slate-600')
+        };
+      case 'typescript':
+        return {
+          glow: isSelected 
+            ? 'shadow-[0_0_20px_rgba(59,130,246,0.45)] border-blue-400/60 bg-blue-400/10' 
+            : `${baseBorder} hover:border-blue-400/50 ${hoverBg}`,
+          iconColor: isDark ? 'text-blue-400 drop-shadow-[0_0_6px_rgba(59,130,246,0.4)]' : 'text-blue-700 font-bold',
+          tagColor: isSelected 
+            ? (isDark 
+                ? 'text-blue-300 font-bold drop-shadow-[0_0_6px_rgba(59,130,246,0.5)]' 
+                : 'text-blue-800 font-extrabold') 
+            : (isDark ? 'text-slate-400' : 'text-slate-600')
+        };
+      case 'frontend':
+        return {
+          glow: isSelected 
+            ? 'shadow-[0_0_20px_rgba(56,189,248,0.45)] border-sky-400/60 bg-sky-400/10' 
+            : `${baseBorder} hover:border-sky-400/50 ${hoverBg}`,
+          iconColor: isDark ? 'text-sky-400 drop-shadow-[0_0_6px_rgba(56,189,248,0.4)]' : 'text-sky-700 font-bold',
+          tagColor: isSelected 
+            ? (isDark 
+                ? 'text-sky-300 font-bold drop-shadow-[0_0_6px_rgba(56,189,248,0.5)]' 
+                : 'text-sky-800 font-extrabold') 
+            : (isDark ? 'text-slate-400' : 'text-slate-600')
+        };
+      case 'backend-learning':
+        return {
+          glow: isSelected 
+            ? 'shadow-[0_0_20px_rgba(52,211,153,0.45)] border-emerald-400/60 bg-emerald-400/10' 
+            : `${baseBorder} hover:border-emerald-400/50 ${hoverBg}`,
+          iconColor: isDark ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.4)]' : 'text-emerald-700 font-bold',
+          tagColor: isSelected 
+            ? (isDark 
+                ? 'text-emerald-300 font-bold drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]' 
+                : 'text-emerald-800 font-extrabold') 
+            : (isDark ? 'text-slate-400' : 'text-slate-600')
+        };
       case 'github':
         return {
           glow: isSelected 
@@ -252,28 +306,16 @@ export default function App() {
                 : 'text-slate-800 font-extrabold') 
             : (isDark ? 'text-slate-400' : 'text-slate-600')
         };
-      case 'vscode':
+      case 'tools':
         return {
           glow: isSelected 
-            ? 'shadow-[0_0_20px_rgba(59,130,246,0.45)] border-[#3B82F6]/60 bg-[#3B82F6]/10' 
-            : `${baseBorder} hover:border-[#3B82F6]/50 ${hoverBg}`,
-          iconColor: isDark ? 'text-[#3B82F6] drop-shadow-[0_0_6px_rgba(59,130,246,0.4)]' : 'text-blue-700 font-bold',
+            ? 'shadow-[0_0_20px_rgba(244,114,182,0.45)] border-pink-400/60 bg-pink-400/10' 
+            : `${baseBorder} hover:border-pink-400/50 ${hoverBg}`,
+          iconColor: isDark ? 'text-pink-400 drop-shadow-[0_0_6px_rgba(244,114,182,0.4)]' : 'text-pink-700 font-bold',
           tagColor: isSelected 
             ? (isDark 
-                ? 'text-blue-300 font-bold drop-shadow-[0_0_6px_rgba(59,130,246,0.5)]' 
-                : 'text-blue-850 font-extrabold') 
-            : (isDark ? 'text-slate-400' : 'text-slate-600')
-        };
-      case 'jupyter':
-        return {
-          glow: isSelected 
-            ? 'shadow-[0_0_20px_rgba(249,115,22,0.45)] border-[#F97316]/60 bg-[#F97316]/10' 
-            : `${baseBorder} hover:border-[#F97316]/50 ${hoverBg}`,
-          iconColor: isDark ? 'text-[#F97316] drop-shadow-[0_0_6px_rgba(249,115,22,0.4)]' : 'text-orange-700 font-bold',
-          tagColor: isSelected 
-            ? (isDark 
-                ? 'text-orange-300 font-bold drop-shadow-[0_0_6px_rgba(249,115,22,0.5)]' 
-                : 'text-orange-850 font-extrabold') 
+                ? 'text-pink-300 font-bold drop-shadow-[0_0_6px_rgba(244,114,182,0.5)]' 
+                : 'text-pink-800 font-extrabold') 
             : (isDark ? 'text-slate-400' : 'text-slate-600')
         };
       default:
@@ -292,12 +334,12 @@ export default function App() {
     sql: { code: 'SELECT AVG(volume_gb), cohort\nFROM metrics GROUP BY 2;', label: 'Query Cost: 0.012 • PostgreSQL v15' },
     ml: { code: 'from sklearn.ensemble import RandomForestClassifier\nclf.fit(X_train, y_train)', label: 'Accuracy: 98.4% • Gini Split' },
     'data-analysis': { code: 'df.groupby("cohort").agg({"volume": "mean"})', label: 'ETL Pipeline • Memory: 4.2MB' },
-    'data-viz': { code: 'sns.heatmap(df.corr(), cmap="coolwarm", annot=True)', label: 'Matplotlib Engine • Res: 300dpi' },
-    ai: { code: 'from google import genai\nclient = genai.Client()', label: 'Gemini-2.5 • Latency: 120ms' },
-    'full-stack': { code: 'const [metrics, setMetrics] = useState(null)', label: 'React 19 Hooks • Port: 3000' },
-    jupyter: { code: 'cell_execution_index: [#15]\n%matplotlib inline', label: 'IPython Kernel • Threads: 4 Active' },
-    github: { code: 'git commit -m "feat: complete model optimization"', label: 'Version: 2.40 • Remote: origin' },
-    vscode: { code: 'noora@local:~$ python3 -m pytest tests/', label: 'Linter: active • Extension: Pylance' }
+    react: { code: 'const [booking, setBooking] = useState<ServiceTier>("premium");\nreturn <PackageCard tier={booking} />;', label: 'React 18 SPA • FoamXpress Architecture' },
+    typescript: { code: 'interface DentalRecord {\n  patientId: string;\n  status: "scheduled" | "completed";\n}', label: 'TypeScript Strict Mode • SmileSync Schema' },
+    frontend: { code: 'export function UI() {\n  return <div className="grid md:grid-cols-2 gap-4" />;\n}', label: 'Tailwind CSS + Vite • Mobile-First' },
+    'backend-learning': { code: 'app.get("/api/v1/health", (req, res) => {\n  res.json({ status: "learning_active" });\n});', label: 'Node.js & Express.js • Learning Roadmap' },
+    github: { code: 'git commit -m "feat: implement dual track roadmap UI"\ngit push origin main', label: 'Version: 2.40 • Remote: origin' },
+    tools: { code: 'Power BI Dashboard | Tableau Public | Jupyter | VS Code', label: 'Analytics & Dev Environment Tools' }
   };
 
   const isDark = theme === 'dark';
@@ -355,12 +397,12 @@ export default function App() {
                   NOORA
                 </span>
                 <span className={`text-[10px] font-mono tracking-wide mt-1.5 font-bold ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>
-                  Data Science Portfolio
+                  Data Science & Full-Stack Development
                 </span>
               </div>
             </div>
 
-            {/* STATUS INDICATORS: Available for Internships / Open to Data Analyst Opportunities */}
+            {/* STATUS INDICATORS: Available for Internships / Open to Opportunities */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-2 px-4 rounded-xl bg-slate-950/25 border border-white/5 backdrop-blur-md">
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
@@ -374,11 +416,11 @@ export default function App() {
               <div className="hidden sm:block text-slate-700 font-sans text-xs">|</div>
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-450 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                 </span>
-                <span className={`text-[11px] font-sans font-semibold tracking-wide ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
-                  Open to Data Analyst Opportunities
+                <span className={`text-[11px] font-sans font-semibold tracking-wide ${isDark ? 'text-cyan-400' : 'text-cyan-700'}`}>
+                  Open to Data Analytics & Full-Stack Opportunities
                 </span>
               </div>
             </div>
@@ -402,6 +444,42 @@ export default function App() {
             
             {/* Quick Navigation Scroll Links */}
             <div className="flex items-center gap-2 overflow-x-auto sb-hide py-1">
+              <button
+                id="nav-analytics-track-btn"
+                onMouseEnter={handleHover}
+                onClick={() => {
+                  sound.playClick();
+                  const analyticsSec = document.getElementById('data-science-workbench') || document.getElementById('data-science-intelligence-hub');
+                  if (analyticsSec) analyticsSec.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className={`px-3.5 py-1.5 rounded-lg border text-xs transition-all cursor-pointer font-mono font-bold shrink-0 flex items-center gap-1.5 ${
+                  isDark 
+                    ? 'border-cyan-500/40 text-cyan-300 bg-cyan-950/40 hover:bg-cyan-900/50 hover:border-cyan-400 shadow-[0_0_10px_rgba(0,229,255,0.15)]' 
+                    : 'border-cyan-500/40 text-cyan-800 bg-cyan-50 hover:bg-cyan-100 hover:border-cyan-500'
+                }`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                Analytics Track
+              </button>
+
+              <button
+                id="nav-dev-track-btn"
+                onMouseEnter={handleHover}
+                onClick={() => {
+                  sound.playClick();
+                  const devSec = document.getElementById('full-stack-development-section');
+                  if (devSec) devSec.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className={`px-3.5 py-1.5 rounded-lg border text-xs transition-all cursor-pointer font-mono font-bold shrink-0 flex items-center gap-1.5 ${
+                  isDark 
+                    ? 'border-purple-500/40 text-purple-300 bg-purple-950/40 hover:bg-purple-900/50 hover:border-purple-400 shadow-[0_0_10px_rgba(139,92,246,0.15)]' 
+                    : 'border-purple-500/40 text-purple-800 bg-purple-50 hover:bg-purple-100 hover:border-purple-500'
+                }`}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                Development Track
+              </button>
+
               <button
                 id="nav-about-btn"
                 onMouseEnter={handleHover}
@@ -511,7 +589,7 @@ export default function App() {
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-[10px] tracking-wider transition-all cursor-pointer ${
                   isDark 
                     ? 'bg-white/5 border-white/10 text-slate-400 hover:text-white hover:border-white/20' 
-                    : 'bg-slate-200/60 border-slate-300 text-slate-700 hover:text-slate-900 hover:border-slate-400'
+                    : 'bg-slate-200/60 border-slate-300 text-slate-700 hover:text-slate-905" hover:border-slate-400'
                 }`}
                 title="Toggle Theme"
               >
@@ -537,7 +615,7 @@ export default function App() {
             animate="visible"
             className="lg:col-span-6 space-y-6 flex flex-col justify-center"
           >
-             {/* Internship Banner */}
+            {/* Dual Opportunity Banner */}
             <motion.div
               id="internship-banner"
               variants={heroItemVariants}
@@ -551,7 +629,7 @@ export default function App() {
             >
               <span className="text-[#00E5FF] text-md">🚀</span>
               <span className={`text-xs sm:text-sm font-medium tracking-wide ${isDark ? 'text-slate-205' : 'text-slate-700'}`}>
-                Open for <span className={`font-semibold font-mono ${isDark ? 'text-[#00E5FF]' : 'text-cyan-705'}`}>Internships</span> & <span className={`font-semibold font-mono ${isDark ? 'text-[#EC4899]' : 'text-pink-650'}`}>Entry-Level Data Analyst Roles</span>
+                Open for <span className={`font-semibold font-mono ${isDark ? 'text-[#00E5FF]' : 'text-cyan-705'}`}>Internships</span> & <span className={`font-semibold font-mono ${isDark ? 'text-[#EC4899]' : 'text-pink-650'}`}>Entry-Level Roles in Data Analytics & Full-Stack Dev</span>
               </span>
             </motion.div>
 
@@ -590,7 +668,7 @@ export default function App() {
                 </div>
                 <div className="space-y-1">
                   <h4 className={`text-sm font-display font-extrabold tracking-wide ${isDark ? 'text-white' : 'text-slate-900'}`}>KR Mangalam University</h4>
-                  <p className={`text-xs font-sans ${isDark ? 'text-slate-300' : 'text-slate-650'}`}>B.Tech Computer Science Engineering • Data Science Specialist</p>
+                  <p className={`text-xs font-sans ${isDark ? 'text-slate-300' : 'text-slate-650'}`}>B.Tech Computer Science Engineering • Data Science & Web Development</p>
                   <div className={`flex gap-4 pt-1.5 text-[10px] font-mono ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                     <span className="flex items-center gap-1"><MapPin size={11} className={isDark ? 'text-[#00E5FF]' : 'text-cyan-700'} /> Haryana / Delhi NCR, India</span>
                     <span className="flex items-center gap-1"><Calendar size={11} className={isDark ? 'text-[#EC4899]' : 'text-pink-600'} /> 2023 - 2027</span>
@@ -602,7 +680,7 @@ export default function App() {
             {/* Professional Summary Statement */}
             <motion.div id="professional-summary" variants={heroItemVariants} className="w-full max-w-lg">
               <TypewriterText 
-                text="Motivated B.Tech Computer Science and Engineering (Data Science) student with knowledge of Python, SQL, Machine Learning fundamentals, Data Analysis, and Data Visualization. Experience in developing academic projects involving machine learning, neural networks, web applications, and database management. Seeking internship opportunities to apply technical and analytical skills while contributing to real-world projects." 
+                text="Motivated B.Tech Computer Science and Engineering (Data Science) student with knowledge of Python, SQL, Machine Learning fundamentals, Data Analysis, and Data Visualization alongside practical web development with React, TypeScript, and Tailwind CSS. Experience in developing projects involving machine learning, data analysis, neural networks, and responsive web applications (FoamXpress, SmileSync). Seeking internship and entry-level opportunities in Data Analytics and Full-Stack Development." 
                 theme={theme}
               />
             </motion.div>
@@ -780,10 +858,10 @@ export default function App() {
 
           </motion.div>
 
-          {/* RIGHT COLUMN: REVOLVING CYBER PROFILE STAGE & STARBURST SKILL BLOCKS */}
+          {/* RIGHT COLUMN: REVOLVING CYBER AVATAR & STARBURST SKILL BLOCKS */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center pt-8 lg:pt-0">
             
-            {/* The Holographic Stage Container */}
+            {/* The Avatar Stage Container */}
             <div 
               style={{
                 transform: `perspective(1000px) rotateX(${stageTiltX}deg) rotateY(${stageTiltY}deg)`,
@@ -854,7 +932,7 @@ export default function App() {
                       : (isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)');
 
                     const isHovered = hoveredSkillNode === node.id;
-                    const showPackets = isSelected || isHovered;
+                    const showPackets = isSelected || isHovered || isAvatarHovered;
 
                     return (
                       <g key={node.id}>
@@ -868,10 +946,10 @@ export default function App() {
                           transition={isSelected ? { repeat: Infinity, duration: 1.2, ease: 'linear' } : {}}
                           strokeDasharray={isSelected ? '6 4' : 'none'}
                         />
-                        {/* Subtle 'data packet' animation effect between the skill nodes and the central stage */}
+                        {/* Subtle 'data packet' animation effect between the skill nodes and the central avatar */}
                         {showPackets && (
                           <g id={`data-packets-${node.id}`}>
-                            {/* Packet 1: Travelling from Stage Center to Skill Node */}
+                            {/* Packet 1: Travelling from Avatar to Skill Node */}
                             <g>
                               <motion.circle
                                 r="4"
@@ -883,7 +961,7 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: isHovered ? 0.9 : 2.0,
+                                  duration: (isHovered || isAvatarHovered) ? 0.9 : 2.0,
                                   ease: 'linear',
                                   delay: 0,
                                 }}
@@ -897,14 +975,14 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: isHovered ? 0.9 : 2.0,
+                                  duration: (isHovered || isAvatarHovered) ? 0.9 : 2.0,
                                   ease: 'linear',
                                   delay: 0,
                                 }}
                               />
                             </g>
 
-                            {/* Packet 2: Travelling from Skill Node to Stage Center */}
+                            {/* Packet 2: Travelling from Skill Node to Avatar */}
                             <g>
                               <motion.circle
                                 r="4"
@@ -916,7 +994,7 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: isHovered ? 1.1 : 2.4,
+                                  duration: (isHovered || isAvatarHovered) ? 1.1 : 2.4,
                                   ease: 'linear',
                                   delay: 0.4,
                                 }}
@@ -930,7 +1008,7 @@ export default function App() {
                                 }}
                                 transition={{
                                   repeat: Infinity,
-                                  duration: isHovered ? 1.1 : 2.4,
+                                  duration: (isHovered || isAvatarHovered) ? 1.1 : 2.4,
                                   ease: 'linear',
                                   delay: 0.4,
                                 }}
@@ -938,7 +1016,7 @@ export default function App() {
                             </g>
 
                             {/* Packet 3 (Hover active high-speed extra particle) */}
-                            {isHovered && (
+                            {(isHovered || isAvatarHovered) && (
                               <g>
                                 <motion.circle
                                   r="4.5"
@@ -979,17 +1057,43 @@ export default function App() {
                 </svg>
               </div>
 
-              {/* Circular Avatar Container */}
-              <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-                <div className="relative w-[52%] h-[52%] max-w-[220px] max-h-[220px] rounded-full overflow-hidden border border-white/15 shadow-[0_0_32px_rgba(255,255,255,0.08)] bg-slate-950/15 flex items-center justify-center">
+              {/* Dynamic spinning backdrop glow behind the avatar */}
+              <div className="absolute inset-10 bg-gradient-to-tr from-[#00E5FF]/20 via-[#8B5CF6]/20 to-[#EC4899]/20 rounded-full animate-spin-reverse opacity-45 blur-3xl pointer-events-none" />
+
+              {/* Triple-layer animated custom portrait ring & glow frame */}
+              <div className="absolute inset-[-14px] bg-gradient-to-tr from-[#00E5FF] via-[#8B5CF6] to-[#EC4899] rounded-full opacity-35 blur-3xl pointer-events-none animate-pulse-slow"></div>
+
+              {/* Central Floating Portrait Ring */}
+              <motion.div
+                id="central-avatar-ring"
+                animate={{ y: [-10, 10, -10] }}
+                transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
+                onMouseEnter={() => setIsAvatarHovered(true)}
+                onMouseLeave={() => setIsAvatarHovered(false)}
+                className="relative z-10 w-48 h-48 sm:w-56 sm:h-56 rounded-full flex items-center justify-center p-[6px] transition-shadow duration-500 shadow-[0_0_50px_rgba(0,229,255,0.22),0_0_50px_rgba(236,72,153,0.22)] hover:shadow-[0_0_70px_rgba(0,229,255,0.45),0_0_70px_rgba(236,72,153,0.45)] group/avatar"
+              >
+                {/* Outer Ring: Neon Cyan */}
+                <div className="absolute inset-0 rounded-full border-2 border-[#00E5FF]/70 animate-spin-slow opacity-90" style={{ animationDuration: '24s' }} />
+                
+                {/* Middle Ring: Vibrant Purple */}
+                <div className="absolute inset-[3px] rounded-full border border-dashed border-[#8B5CF6]/85 animate-spin-reverse opacity-85" style={{ animationDuration: '16s' }} />
+                
+                {/* Inner Ring: Neon Pink */}
+                <div className="absolute inset-[6px] rounded-full border-2 border-[#EC4899]/80 animate-spin-slow opacity-95" style={{ animationDuration: '12s' }} />
+                
+                <div className={`w-full h-full rounded-full overflow-hidden relative border-2 ${isDark ? 'bg-slate-950 border-[#050816]' : 'bg-slate-100 border-slate-200'}`}>
                   <img
+                    id="noora-avatar-img"
                     src={avatarImg}
-                    alt="Avatar"
-                    className="w-full h-full object-cover"
-                    style={{ objectPosition: 'center center' }}
+                    alt="Noora Avatar"
+                    className="w-full h-full object-cover select-none pointer-events-none scale-102 group-hover/avatar:scale-108 transition-all duration-700 font-sans"
+                    referrerPolicy="no-referrer"
                   />
+                  <div className={`absolute inset-0 bg-gradient-to-t via-black/10 to-transparent ${isDark ? 'from-black/60' : 'from-black/30'}`} />
+                  {/* Digital HUD scanline sweep overlay */}
+                  <div className="absolute inset-0 bg-[linear-gradient(rgba(0,229,255,0.05)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-15 pointer-events-none" />
                 </div>
-              </div>
+              </motion.div>
 
               {/* Surrounding Skill Nodes (Absolute positioned in circle) */}
               <div className="absolute inset-0 w-full h-full pointer-events-none z-20">
@@ -1255,6 +1359,9 @@ export default function App() {
 
         {/* ADVANCED PORTFOLIO SKILLS SECTION */}
         <DataScienceIntelligenceHub theme={theme} />
+
+        {/* DEDICATED FULL STACK DEVELOPMENT & SOFTWARE ENGINEERING SECTION */}
+        <FullStackDevelopmentSection theme={theme} />
 
         {/* PREMIUM FEATURED PROJECTS SECTIONS */}
         <FeaturedProjects theme={theme} />

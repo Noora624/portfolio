@@ -187,7 +187,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       <span>AVAILABILITY_STATUS</span>
                     </span>
                     <p className="text-[11px] text-slate-350 leading-relaxed font-sans">
-                      Open for internships and entry-level Data Analyst roles.
+                      Open for internships and entry-level roles in Data Analytics / Data Science & Full-Stack Web Development.
                     </p>
                   </div>
                 </div>

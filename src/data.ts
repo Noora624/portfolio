@@ -9,7 +9,7 @@ export const SKILL_NODES: SkillNode[] = [
     xOffset: -120, // left side top
     yOffset: -160,
     angle: 150,
-    details: 'Intermediate to advanced Python. Core expertise in programming logic, automation scripts, NumPy, Pandas, and object-oriented architectures.',
+    details: 'Intermediate to advanced Python. Core expertise in programming logic, automation scripts, NumPy, Pandas, data structures, and algorithmic foundations.',
     color: 'text-amber-400',
     glowColor: 'rgba(234, 179, 8, 0.4)'
   },
@@ -21,7 +21,7 @@ export const SKILL_NODES: SkillNode[] = [
     xOffset: -150, // left side upper-mid
     yOffset: -60,
     angle: 175,
-    details: 'Proficient in relational databases, write aggregate queries, complex joins, database schema design, and MySQL/PostgreSQL management.',
+    details: 'Relational database querying, multi-table joins, aggregate queries, CTEs, schema modeling, and MySQL/PostgreSQL management.',
     color: 'text-cyan-400',
     glowColor: 'rgba(6, 182, 212, 0.4)'
   },
@@ -33,7 +33,7 @@ export const SKILL_NODES: SkillNode[] = [
     xOffset: -150, // left side lower-mid
     yOffset: 40,
     angle: -170,
-    details: 'Supervised and unsupervised models, scikit-learn, clustering analysis, linear regression, and neural network foundations.',
+    details: 'Supervised and unsupervised models, scikit-learn, clustering analysis, linear regression, classification, and neural network foundations.',
     color: 'text-purple-400',
     glowColor: 'rgba(192, 132, 252, 0.4)'
   },
@@ -45,81 +45,81 @@ export const SKILL_NODES: SkillNode[] = [
     xOffset: -120, // left side bottom
     yOffset: 140,
     angle: -140,
-    details: 'Extract insights from unstructured data, statistical analysis, cleaning datasets, and exploratory data analysis (EDA).',
+    details: 'Extracting insights from datasets, statistical analysis, data cleaning, exploratory data analysis (EDA), and executive KPI reporting.',
     color: 'text-green-400',
     glowColor: 'rgba(74, 222, 128, 0.4)'
   },
   {
-    id: 'data-viz',
-    name: 'Data Viz',
-    category: 'tool',
-    iconName: 'TrendingUp',
+    id: 'react',
+    name: 'React.js',
+    category: 'language',
+    iconName: 'Laptop',
     xOffset: -60, // left side deep bottom
     yOffset: 220,
     angle: -110,
-    details: 'Creating impactful visualizations using Matplotlib, Seaborn, Tableau, and interactive dashboard systems.',
-    color: 'text-indigo-400',
-    glowColor: 'rgba(129, 140, 248, 0.4)'
+    details: 'Modern React SPA development, functional components, custom hooks, component lifecycle, reactive state management, and UI architecture (demonstrated in FoamXpress & SmileSync).',
+    color: 'text-cyan-300',
+    glowColor: 'rgba(6, 182, 212, 0.4)'
   },
   {
-    id: 'ai',
-    name: 'AI Engineering',
-    category: 'ml',
-    iconName: 'Cpu',
+    id: 'typescript',
+    name: 'TypeScript',
+    category: 'language',
+    iconName: 'Code',
     xOffset: 120, // right side top
     yOffset: -160,
     angle: 30,
-    details: 'Explorations in artificial neural network setups, natural language processing models, and AI agent frameworks.',
-    color: 'text-pink-400',
-    glowColor: 'rgba(244, 114, 182, 0.4)'
+    details: 'Type-safe frontend development, interfaces, strict generics, prop type validation, and robust maintainable codebases.',
+    color: 'text-blue-400',
+    glowColor: 'rgba(96, 165, 250, 0.4)'
   },
   {
-    id: 'full-stack',
-    name: 'Full Stack',
-    category: 'language',
-    iconName: 'Laptop',
+    id: 'frontend',
+    name: 'Front-End Dev',
+    category: 'tool',
+    iconName: 'Layers',
     xOffset: 150, // right side upper-mid
     yOffset: -60,
     angle: 5,
-    details: 'Web-application frontends styled with Tailwind CSS, React dashboards, and server-side mock endpoint proxy configurations.',
+    details: 'Responsive mobile-first web engineering using Tailwind CSS, modern JavaScript (ES6+), Vite build tools, and Framer Motion interactive animations.',
     color: 'text-sky-400',
     glowColor: 'rgba(56, 189, 248, 0.4)'
   },
   {
-    id: 'jupyter',
-    name: 'Jupyter Hub',
+    id: 'backend-learning',
+    name: 'Node / Backend',
     category: 'tool',
-    iconName: 'BookOpen',
+    iconName: 'Terminal',
     xOffset: 150, // right side lower-mid
     yOffset: 40,
     angle: -10,
-    details: 'Drafting data stories, embedding data validation plots, and code documentation in collaborative Jupyter notebooks.',
-    color: 'text-orange-500',
-    glowColor: 'rgba(249, 115, 22, 0.4)'
+    details: 'Active Learning Roadmap: Building server-side foundations with Node.js, Express.js REST APIs, request/response lifecycle, and database integration.',
+    color: 'text-emerald-400',
+    glowColor: 'rgba(52, 211, 153, 0.4)'
   },
   {
     id: 'github',
-    name: 'GitHub',
+    name: 'Git & GitHub',
     category: 'tool',
     iconName: 'GitFork',
     xOffset: 120, // right side bottom
     yOffset: 140,
     angle: -40,
-    details: 'Proficient in Git workflows, hosting repositories, version control management, and collective team code reviews.',
+    details: 'Proficient in Git version control, branching strategies, repository management, collaborative PR workflows, and code maintenance.',
     color: 'text-slate-300',
     glowColor: 'rgba(203, 213, 225, 0.4)'
   },
   {
-    id: 'vscode',
-    name: 'VS Code',
+    id: 'tools',
+    name: 'Data & Dev Tools',
     category: 'tool',
-    iconName: 'Terminal',
+    iconName: 'Cpu',
     xOffset: 60, // right side deep bottom
     yOffset: 220,
     angle: -70,
-    details: 'Efficient environment setup, customized linter adjustments, rapid debugger operations, and developer terminal integrations.',
-    color: 'text-blue-500',
-    glowColor: 'rgba(59, 130, 246, 0.4)'
+    details: 'Power BI, Tableau, Excel, Jupyter Notebook, Google Colab, VS Code, and browser debugging workflows.',
+    color: 'text-pink-400',
+    glowColor: 'rgba(244, 114, 182, 0.4)'
   }
 ];
 
@@ -141,7 +141,7 @@ export const STATISTICS: StatItem[] = [
   {
     id: 'tech',
     label: 'Technologies',
-    value: 15,
+    value: 18,
     suffix: '+',
     iconName: 'Cpu'
   }
@@ -171,7 +171,7 @@ export const EXPERIENCE_PROJECTS: AcademicProject[] = [
   },
   {
     id: 'proj4',
-    category: 'Web Application',
+    category: 'Data-Driven Web App',
     title: 'Interactive Sales Dashboard',
     description: 'Assembled a full-stack mockup of a sales forecasting platform using high-chart visualizations to display real-time business health indices.',
     tech: ['React', 'Tailwind CSS', 'Vite', 'Lucide Icons']
@@ -185,17 +185,17 @@ export const EXPERIENCE_PROJECTS: AcademicProject[] = [
   },
   {
     id: 'proj6',
-    category: 'Web Application',
-    title: 'FoamXpress',
-    description: 'A modern Car & Bike Wash booking platform where users can select vehicle type, choose services, view pricing, and make bookings through a responsive interface.',
-    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS']
+    category: 'Frontend / Web Development',
+    title: 'FoamXpress — Vehicle Grooming & Booking Platform',
+    description: 'A modern, responsive car and bike wash booking web application built with React and TypeScript. Features vehicle-type selection, dynamic service tier customization, instant price computation, real-time slot selection, and structured form validation.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'State Management']
   },
   {
     id: 'proj7',
-    category: 'Web Application',
-    title: 'SmileSync',
-    description: 'A smart dental clinic management system that allows appointment booking, patient management, and provides a clean, responsive UI for dental professionals and patients alike.',
-    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS']
+    category: 'Frontend / Web Development',
+    title: 'SmileSync — Smart Dental Practice Management UI',
+    description: 'A clean, responsive dental clinic management interface built with React and TypeScript. Features dynamic appointment scheduling, patient record cards, multi-doctor timeline filtering, and interactive clinic status dashboards with seamless component architecture.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Component Design']
   }
 ];
 

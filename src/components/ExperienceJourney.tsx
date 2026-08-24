@@ -21,7 +21,12 @@ import {
   Terminal,
   LineChart,
   Target,
-  ArrowUpRight
+  ArrowUpRight,
+  Code2,
+  Layers,
+  Globe,
+  MonitorSmartphone,
+  Workflow
 } from 'lucide-react';
 import { sound } from '../utils/sound';
 
@@ -48,6 +53,7 @@ interface EvolutionNode {
 
 export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyProps) {
   const isDark = theme === 'dark';
+  const [activeTrack, setActiveTrack] = useState<'data-analytics' | 'full-stack'>('data-analytics');
   const [activeNode, setActiveNode] = useState<string>('internship');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isInteractiveLineDrawn, setIsInteractiveLineDrawn] = useState(false);
@@ -92,24 +98,34 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
     setActiveNode(id);
   };
 
+  const handleTrackChange = (track: 'data-analytics' | 'full-stack') => {
+    sound.playClick();
+    setActiveTrack(track);
+    if (track === 'data-analytics') {
+      setActiveNode('internship');
+    } else {
+      setActiveNode('web-projects');
+    }
+  };
+
   const playHover = () => {
     sound.playHover();
   };
 
-  // Timeline Evolution data integrating the progression: Student -> Data Science Learner -> Data Analyst Intern -> Future Analyst
-  const journeyNodes: EvolutionNode[] = [
+  // Dual Career Roadmap Nodes
+  const dataAnalyticsNodes: EvolutionNode[] = [
     {
-      id: 'student',
-      role: 'B.Tech CSE Student',
+      id: 'student-data',
+      role: 'B.Tech CSE Data Science Student',
       company: 'K.R. Mangalam University',
       duration: '2023 - Present',
       location: 'Delhi NCR, India',
       badge: 'ACADEMIC IGNITION',
-      summary: 'Establishing a premium mathematical and computational foundation in Computer Science and Engineering with an specialized focus on Data Science constructs, OOP paradigms, and system design pipelines.',
+      summary: 'Establishing mathematical and computational foundation in Computer Science with a specialization in Data Science constructs, statistical modeling, database systems, and OOP paradigms.',
       icon: <GraduationCap className="text-[#00E5FF]" size={20} />,
       accent: 'from-[#00E5FF] to-[#00B0FF]',
       glow: 'rgba(0, 229, 255, 0.2)',
-      skills: ['Python', 'Data Structures', 'Procedural Logic', 'Statistical Foundations', 'Core Algebra'],
+      skills: ['Python', 'SQL & Queries', 'Data Structures', 'Statistical Foundations', 'Matrix Algebra'],
       outcomes: [
         'Formulated custom data structural arrays and matrix manipulation algorithms answering complex relational queries.',
         'Secured consistent academic standing, specializing in algorithmic efficiency and programmatic computing blocks.'
@@ -121,17 +137,17 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
       ]
     },
     {
-      id: 'learner',
-      role: 'Data Science Scholar',
-      company: 'Autodidact & Laboratory Research',
+      id: 'scholar-data',
+      role: 'Data Science & Analytics Scholar',
+      company: 'Academic Projects & Laboratory Research',
       duration: '2024 - 2025',
       location: 'Research Workspace',
       badge: 'CORE COMPLIANCE',
-      summary: 'Scaled into deep statistical programming, engineering robust tabular transformations, performing null matrix counts, and launching exploratory analytics plots via Python packages.',
+      summary: 'Built statistical workflows, engineering tabular transformations, performing null matrix counts, and launching exploratory analytics plots and machine learning classifiers via Python.',
       icon: <Cpu className="text-[#8B5CF6]" size={20} />,
       accent: 'from-[#8B5CF6] to-[#6366F1]',
       glow: 'rgba(139, 92, 246, 0.2)',
-      skills: ['Pandas', 'NumPy', 'Scikit-Learn', 'Exploratory Data Analysis', 'Machine Learning Foundations'],
+      skills: ['Pandas', 'NumPy', 'Scikit-Learn', 'Exploratory Data Analysis', 'Predictive Modeling'],
       outcomes: [
         'Mastered dense tabular slicing, correlation matrix plots, coefficient mapping, and predictive estimators.',
         'Wrote custom model hyperparameter optimization loops achieving consistent generalization profiles on validation sets.'
@@ -149,7 +165,7 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
       duration: 'June 2025 – July 2025',
       location: 'Haryana, India',
       badge: 'PROFESSIONAL MILESTONE',
-      summary: 'Drove critical operational data engineering and strategic analysis. Integrated legacy commercial tracking spreadsheets into modern database schemas, crafted high-contrast reporting dashboards, and ran rigorous statistical assessments to optimize commercial equipment analytics.',
+      summary: 'Drove operational data engineering and strategic analysis. Integrated legacy commercial tracking spreadsheets into modern database schemas, crafted high-contrast reporting dashboards, and ran statistical assessments to optimize commercial equipment analytics.',
       icon: <Briefcase className="text-[#EC4899]" size={20} />,
       accent: 'from-[#EC4899] to-[#F43F5E]',
       glow: 'rgba(236, 72, 153, 0.2)',
@@ -166,9 +182,9 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
       ]
     },
     {
-      id: 'future',
-      role: 'Future Data Analyst',
-      company: 'Enterprise Scale Analytics',
+      id: 'future-data',
+      role: 'Future Data Analyst / AI Specialist',
+      company: 'Enterprise Data & Analytics Roles',
       duration: 'Upcoming 2026',
       location: 'Global Market Ingress',
       badge: 'GROWTH CATALYST',
@@ -189,53 +205,145 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
     }
   ];
 
-  // Professional Highlights Cards reflecting applied capabilities
+  const fullStackNodes: EvolutionNode[] = [
+    {
+      id: 'student-dev',
+      role: 'B.Tech CSE Student (CS Foundations)',
+      company: 'K.R. Mangalam University',
+      duration: '2023 - Present',
+      location: 'Delhi NCR, India',
+      badge: 'ACADEMIC IGNITION',
+      summary: 'Acquiring robust computer science fundamentals including Data Structures & Algorithms, Object-Oriented Programming, relational databases, web standards (HTML5/CSS3/JavaScript), and modular software engineering principles.',
+      icon: <GraduationCap className="text-[#00E5FF]" size={20} />,
+      accent: 'from-[#00E5FF] to-[#00B0FF]',
+      glow: 'rgba(0, 229, 255, 0.2)',
+      skills: ['JavaScript ES6+', 'HTML5 / CSS3', 'Data Structures', 'OOP Paradigms', 'Git & GitHub'],
+      outcomes: [
+        'Built foundational computational projects with clean algorithmic structure and modular code separation.',
+        'Adopted Git version control workflows for repository management and versioned project iterations.'
+      ],
+      careerPhase: 'CS Foundations',
+      growthMetrics: [
+        { label: 'CS Fundamentals', value: '95%' },
+        { label: 'Algorithm Score', value: '92%' }
+      ]
+    },
+    {
+      id: 'web-projects',
+      role: 'Front-End / React Project Developer',
+      company: 'Academic & Practical Projects',
+      duration: '2024 - 2025',
+      location: 'Interactive Web Lab',
+      badge: 'PRACTICAL MILESTONE',
+      summary: 'Architected responsive, component-driven web applications including FoamXpress (Car & Bike Wash platform with dynamic vehicle selection and booking flows) and SmileSync (Smart Dental Clinic management interface).',
+      icon: <Code2 className="text-[#00E5FF]" size={20} />,
+      accent: 'from-[#00E5FF] to-[#3B82F6]',
+      glow: 'rgba(0, 229, 255, 0.2)',
+      skills: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'State Management', 'Component Architecture'],
+      outcomes: [
+        'Engineered dynamic booking interfaces with multi-tier pricing calculation and real-time form validation.',
+        'Implemented modular, reusable React component systems with strict TypeScript type safety and accessible responsive layouts.'
+      ],
+      careerPhase: 'Applied Web Engineering',
+      growthMetrics: [
+        { label: 'Projects Shipped', value: '2 Major' },
+        { label: 'Type Safety Rate', value: '100%' }
+      ]
+    },
+    {
+      id: 'fullstack-learning',
+      role: 'Full-Stack Foundations Scholar',
+      company: 'Self-Directed & Applied Engineering',
+      duration: '2025 - Present',
+      location: 'Software Engineering Track',
+      badge: 'CONTINUOUS EVOLUTION',
+      summary: 'Expanding from frontend mastery into backend service architectures, studying RESTful API design, Node.js and Express servers, database connectivity (PostgreSQL / MongoDB), and scalable application structure.',
+      icon: <Layers className="text-[#8B5CF6]" size={20} />,
+      accent: 'from-[#8B5CF6] to-[#EC4899]',
+      glow: 'rgba(139, 92, 246, 0.2)',
+      skills: ['RESTful API Concepts', 'Node.js Basics', 'Express.js Fundamentals', 'Database Integration', 'Full-Stack Workflow'],
+      outcomes: [
+        'Deepening understanding of asynchronous client-server communication, JSON contracts, and endpoint architectures.',
+        'Synthesizing full-stack design patterns to connect intuitive UI frontends with robust database services.'
+      ],
+      careerPhase: 'Full-Stack Scaling',
+      growthMetrics: [
+        { label: 'API Architecture', value: 'Active' },
+        { label: 'Backend Learning', value: 'In-Progress' }
+      ]
+    },
+    {
+      id: 'future-dev',
+      role: 'Future Full-Stack / Software Developer',
+      company: 'Software Engineering Roles',
+      duration: 'Upcoming 2026',
+      location: 'Industry Ingress',
+      badge: 'GROWTH CATALYST',
+      summary: 'Preparing to contribute as an agile Full-Stack or Front-End Software Developer, building high-performance web applications, collaborating in cross-functional product sprints, and delivering clean, maintainable code.',
+      icon: <Award className="text-[#10B981]" size={20} />,
+      accent: 'from-[#10B981] to-[#059669]',
+      glow: 'rgba(16, 185, 129, 0.2)',
+      skills: ['Full-Stack Systems', 'Cloud Deployment', 'Agile Collaboration', 'CI/CD Pipelines', 'Clean Architecture'],
+      outcomes: [
+        'Targeting entry-level developer and software engineering positions to build customer-facing digital products.',
+        'Committed to writing scalable, maintainable TypeScript & React code backed by clean server architectures.'
+      ],
+      careerPhase: 'Professional Standard',
+      growthMetrics: [
+        { label: 'Production Readiness', value: '100%' },
+        { label: 'Collaboration Factor', value: 'High' }
+      ]
+    }
+  ];
+
+  const currentJourneyNodes = activeTrack === 'data-analytics' ? dataAnalyticsNodes : fullStackNodes;
+  const activeNodeData = currentJourneyNodes.find(node => node.id === activeNode) || currentJourneyNodes[0];
+
+  // Professional Highlights Cards reflecting both Data and Web capabilities
   const professionalHighlights = [
     {
-      title: "Data Analysis",
+      title: "Data Analytics & SQL",
       stat: "Cleanse & Model",
-      desc: "Architecting rigorous structural workflows to map variables, purge extreme data outliers, and normalize multi-source formats cleanly.",
-      color: "from-blue-500/10 to-cyan-500/5 hover:border-cyan-500/30",
+      desc: "Architecting structural data workflows to clean data, extract KPIs, execute complex SQL aggregates, and formulate actionable decision insights.",
+      color: "from-cyan-500/10 to-blue-500/5 hover:border-cyan-500/30",
       icon: <Database size={16} className="text-cyan-400" />
     },
     {
-      title: "Problem Solving",
-      stat: "Algorithmic Logic",
-      desc: "Filtering raw operations to isolate systematic failures, designing logical checks, and converting unstructured feeds into structured trends.",
+      title: "Front-End & React",
+      stat: "Component Design",
+      desc: "Building clean, interactive user interfaces using React, TypeScript, and Tailwind CSS with robust state handling (FoamXpress, SmileSync).",
+      color: "from-blue-500/10 to-indigo-500/5 hover:border-blue-500/30",
+      icon: <Code2 size={16} className="text-blue-400" />
+    },
+    {
+      title: "Machine Learning",
+      stat: "Predictive Models",
+      desc: "Developing supervised machine learning models, training classifiers with Scikit-Learn, and optimizing feature engineering pipelines.",
       color: "from-purple-500/10 to-indigo-500/5 hover:border-purple-500/30",
       icon: <Brain size={16} className="text-purple-400" />
     },
     {
-      title: "Business Insights",
-      stat: "Decision Matrices",
-      desc: "Translating correlation tables and descriptive aggregates into high-value commercial recommendations for corporate leadership.",
+      title: "Full-Stack Roadmap",
+      stat: "API & Server Foundations",
+      desc: "Expanding into full-stack development with RESTful APIs, Node.js/Express basics, database schemas, and seamless UI-to-service integration.",
       color: "from-pink-500/10 to-rose-500/5 hover:border-rose-500/30",
-      icon: <TrendingUp size={16} className="text-pink-400" />
+      icon: <Layers size={16} className="text-pink-400" />
     },
     {
-      title: "Data Visualization",
-      stat: "Holographic UX",
-      desc: "Synthesizing information into clean bivariate plots, Tableau boards, or custom React interfaces representing multi-tier data sets.",
+      title: "Data Visualization & BI",
+      stat: "Tableau & Power BI",
+      desc: "Synthesizing complex data into high-contrast executive dashboards, exploratory charts, and interactive metric reports.",
       color: "from-amber-500/10 to-orange-500/5 hover:border-orange-500/30",
       icon: <LineChart size={16} className="text-amber-400" />
     },
     {
-      title: "Analytical Thinking",
-      stat: "Statistical Rigor",
-      desc: "Employing mathematical hypotheses, correlation coefficients, and matrix coefficients to prevent bias in forecasting tasks.",
-      color: "from-emerald-500/10 to-teal-500/5 hover:border-emerald-500/30",
-      icon: <Target size={16} className="text-emerald-400" />
-    },
-    {
-      title: "Professional Teamwork",
+      title: "Agile & Teamwork",
       stat: "Cohesive Delivery",
-      desc: "Bridging the gap between engineering, product, and leadership pipelines through clear communication, agile sprints, and visual tools.",
-      color: "from-fuchsia-500/10 to-purple-500/5 hover:border-fuchsia-500/30",
-      icon: <Users size={16} className="text-fuchsia-400" />
+      desc: "Proven commercial exposure at Tricon Equipment India; bridging communication between technical engineering and operational teams.",
+      color: "from-emerald-500/10 to-teal-500/5 hover:border-emerald-500/30",
+      icon: <Users size={16} className="text-emerald-400" />
     }
   ];
-
-  const activeNodeData = journeyNodes.find(node => node.id === activeNode) || journeyNodes[2];
 
   return (
     <section 
@@ -244,13 +352,13 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
       onMouseMove={handleMouseMove}
       className="mt-20 lg:mt-32 w-full space-y-12 relative z-20 scroll-mt-24 overflow-hidden"
     >
-      {/* Dynamic Glow Spotlight (Tesla-inspired background effect reacting to mouse) */}
+      {/* Dynamic Glow Spotlight reacting to mouse */}
       <div 
         className="absolute w-[500px] h-[500px] rounded-full pointer-events-none transition-transform duration-300 opacity-[0.06] blur-[100px] mix-blend-screen"
         style={{
           left: `${mousePos.x - 250}px`,
           top: `${mousePos.y - 250}px`,
-          background: `radial-gradient(circle, ${activeNodeData.id === 'student' ? '#00E5FF' : activeNodeData.id === 'learner' ? '#8B5CF6' : activeNodeData.id === 'internship' ? '#EC4899' : '#10B981'} 0%, transparent 70%)`
+          background: `radial-gradient(circle, ${activeTrack === 'data-analytics' ? '#00E5FF' : '#8B5CF6'} 0%, transparent 70%)`
         }}
       />
 
@@ -268,14 +376,45 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
         <div className={`h-[1px] flex-1 bg-gradient-to-r from-transparent ${isDark ? 'via-cyan-500/20' : 'via-cyan-500/40'} to-transparent`} />
       </div>
 
-      {/* Title & Subtitle */}
-      <div className="text-center space-y-3 max-w-3xl mx-auto">
-        <h2 className="text-4xl sm:text-6xl font-display font-black tracking-tight uppercase leading-none text-white">
-          Experience <span className="bg-gradient-to-r from-[#00E5FF] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">Journey</span>
+      {/* Title & Dual Career Roadmap Switcher */}
+      <div className="text-center space-y-4 max-w-3xl mx-auto">
+        <h2 className={`text-4xl sm:text-6xl font-display font-black tracking-tight uppercase leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          Career <span className="bg-gradient-to-r from-[#00E5FF] via-[#8B5CF6] to-[#EC4899] bg-clip-text text-transparent">Roadmap</span>
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto font-sans leading-relaxed">
-          Building analytical thinking through real-world industry exposure and hands-on problem solving.
+        <p className={`text-xs sm:text-sm max-w-xl mx-auto font-sans leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+          Exploring dual career pathways: applying data analytical rigor and building modern full-stack web applications.
         </p>
+
+        {/* DUAL TRACK SWITCHER BUTTONS */}
+        <div className="inline-flex p-1.5 rounded-2xl border backdrop-blur-md gap-2 mt-2 bg-slate-950/40 border-white/10 shadow-lg">
+          <button
+            id="track-data-analytics-btn"
+            onClick={() => handleTrackChange('data-analytics')}
+            onMouseEnter={playHover}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer ${
+              activeTrack === 'data-analytics'
+                ? 'bg-gradient-to-r from-[#00E5FF]/20 to-[#8B5CF6]/20 border border-[#00E5FF]/50 text-[#00E5FF] shadow-[0_0_15px_rgba(0,229,255,0.25)]'
+                : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+            }`}
+          >
+            <BarChart3 size={14} className={activeTrack === 'data-analytics' ? 'text-[#00E5FF]' : 'text-slate-400'} />
+            <span>Data Analytics & Science Track</span>
+          </button>
+
+          <button
+            id="track-full-stack-btn"
+            onClick={() => handleTrackChange('full-stack')}
+            onMouseEnter={playHover}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all cursor-pointer ${
+              activeTrack === 'full-stack'
+                ? 'bg-gradient-to-r from-[#8B5CF6]/20 to-[#EC4899]/20 border border-[#EC4899]/50 text-[#EC4899] shadow-[0_0_15px_rgba(236,72,153,0.25)]'
+                : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+            }`}
+          >
+            <Code2 size={14} className={activeTrack === 'full-stack' ? 'text-[#EC4899]' : 'text-slate-400'} />
+            <span>Full-Stack Development Track</span>
+          </button>
+        </div>
       </div>
 
       {/* MAIN LAYOUT GLASS GRID */}
@@ -288,22 +427,20 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
               ? 'bg-slate-950/40 border-white/5 shadow-2xl' 
               : 'bg-white/80 border-slate-200'
           }`}>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-[50px] rounded-full pointer-events-none" />
-
-            {/* Neural Network Node Connectors Backdrop */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-              <svg width="100%" height="100%">
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                </pattern>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-              </svg>
-            </div>
+            <div className={`absolute top-0 right-0 w-32 h-32 blur-[50px] rounded-full pointer-events-none ${
+              activeTrack === 'data-analytics' ? 'bg-cyan-500/10' : 'bg-pink-500/10'
+            }`} />
 
             <div className="space-y-4 relative z-10">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono tracking-widest text-[#00E5FF] uppercase block font-bold">CAREER AUTOMATION PATHWAY</span>
-                <span className="text-[8px] font-mono bg-white/5 border border-white/10 text-slate-400 px-2 py-0.5 rounded uppercase">ACTIVE STATE</span>
+                <span className={`text-[10px] font-mono tracking-widest uppercase block font-bold ${
+                  activeTrack === 'data-analytics' ? 'text-[#00E5FF]' : 'text-[#EC4899]'
+                }`}>
+                  {activeTrack === 'data-analytics' ? 'DATA ANALYTICS STAGES' : 'FULL-STACK DEV STAGES'}
+                </span>
+                <span className="text-[8px] font-mono bg-white/5 border border-white/10 text-slate-400 px-2 py-0.5 rounded uppercase">
+                  {activeTrack.toUpperCase()}
+                </span>
               </div>
 
               {/* STAGE TILT VISUAL ELEMENT FOR CAREER EVOLUTION PROGRESSION */}
@@ -320,7 +457,7 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                 </div>
 
                 {/* Evolution Steps */}
-                {journeyNodes.map((node, index) => {
+                {currentJourneyNodes.map((node, index) => {
                   const isActive = activeNode === node.id;
                   
                   return (
@@ -334,13 +471,12 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                       <div className="relative z-10 flex-shrink-0 mt-1">
                         <motion.div 
                           animate={{
-                            scale: isActive ? [1, 1.3, 1] : 1,
-                            backgroundColor: isActive ? "#FFF" : "linear-gradient(45deg, #FFF, #000)"
+                            scale: isActive ? [1, 1.2, 1] : 1,
                           }}
                           transition={{ repeat: Infinity, duration: 2, ease: "easeInOut", repeatType: "reverse" }}
                           className={`w-6 h-6 rounded-full border flex items-center justify-center transition-all ${
                             isActive 
-                              ? 'bg-white border-transparent text-slate-950 shadow-[0_0_15px_rgba(236,72,153,0.6)]' 
+                              ? 'bg-white border-transparent text-slate-950 shadow-[0_0_15px_rgba(0,229,255,0.6)]' 
                               : 'bg-slate-950 border-slate-700 text-slate-450 hover:border-slate-450'
                           }`}
                         >
@@ -348,7 +484,7 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                         </motion.div>
                         
                         {isActive && (
-                          <span className={`absolute -inset-1 rounded-full border border-pink-500/35 animate-ping pointer-events-none`} />
+                          <span className={`absolute -inset-1 rounded-full border border-cyan-500/35 animate-ping pointer-events-none`} />
                         )}
                       </div>
 
@@ -389,21 +525,25 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
 
               {/* Animated Growth Path Indicator */}
               <div className="pt-4 border-t border-white/5 space-y-2">
-                <span className="text-[9px] font-mono text-slate-500 block uppercase">GROWTH TIMELINE PROGRESS</span>
+                <span className="text-[9px] font-mono text-slate-500 block uppercase">TRACK PROGRESSION LEVEL</span>
                 <div className="h-2 rounded-full bg-slate-900 border border-white/5 p-0.5 max-w-full overflow-hidden relative">
                   <motion.div 
+                    key={activeTrack + activeNode}
                     initial={{ width: '0%' }}
                     animate={{ 
-                      width: activeNode === 'student' ? '25%' : activeNode === 'learner' ? '50%' : activeNode === 'internship' ? '75%' : '100%' 
+                      width: 
+                        currentJourneyNodes.findIndex(n => n.id === activeNode) === 0 ? '25%' :
+                        currentJourneyNodes.findIndex(n => n.id === activeNode) === 1 ? '50%' :
+                        currentJourneyNodes.findIndex(n => n.id === activeNode) === 2 ? '75%' : '100%' 
                     }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                     className="h-full rounded-full bg-gradient-to-r from-[#00E5FF] via-[#8B5CF6] to-[#EC4899] shadow-[0_0_8px_rgba(236,72,153,0.4)]"
                   />
                 </div>
                 <div className="flex justify-between text-[8px] font-mono text-slate-500 uppercase">
-                  <span>START</span>
-                  <span>LEARNING</span>
-                  <span className="text-pink-400 font-bold">INTERN</span>
+                  <span>FOUNDATION</span>
+                  <span>SPECIALIZE</span>
+                  <span className="text-cyan-400 font-bold">APPLIED</span>
                   <span>TARGET</span>
                 </div>
               </div>
@@ -423,17 +563,17 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                 <span className="text-[10px] font-mono tracking-widest text-[#00E5FF] font-black uppercase">RECRUITER EVALUATION DESK</span>
               </div>
               <p className="text-[10px] text-slate-400 font-sans leading-relaxed">
-                Click parameters below to dynamically benchmark this candidate&apos;s capabilities based on real project and industry logs.
+                Click parameters below to dynamically benchmark capabilities across Data Analytics and Full-Stack Development.
               </p>
 
               {/* Interactive sliders checklist */}
               <div className="space-y-2.5">
                 {[
-                  { key: 'exposure', label: 'Professional Exposure', detail: 'Tricon corporate team routines' },
-                  { key: 'experience', label: 'Industry Familiarity', detail: 'Tabular database structures & KPIs' },
-                  { key: 'practical', label: 'Hands-on Learning', detail: 'Pandas outlier cleaning & Tableau' },
-                  { key: 'mindset', label: 'Growth/Adaptive Mindset', detail: 'Active B.Tech specialized scaling' },
-                  { key: 'analytics', label: 'Analytical Capability', detail: 'Standard covariance calculations' }
+                  { key: 'exposure', label: 'Commercial Data Exposure', detail: 'Tricon corporate data schemas & BI' },
+                  { key: 'experience', label: 'Web Application Craft', detail: 'FoamXpress & SmileSync React SPAs' },
+                  { key: 'practical', label: 'Data & Modeling Hands-on', detail: 'Pandas, SQL queries & ML classifiers' },
+                  { key: 'mindset', label: 'Adaptive Dual Focus', detail: 'Data insights + modern web UI' },
+                  { key: 'analytics', label: 'TypeScript & Component Systems', detail: 'Typed state & responsive designs' }
                 ].map((item) => {
                   const isChecked = recruiterInteractions[item.key as keyof typeof recruiterInteractions];
                   return (
@@ -449,28 +589,28 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                       onMouseEnter={playHover}
                       className={`p-2 rounded-xl border transition-all cursor-pointer select-none flex items-center justify-between ${
                         isChecked 
-                          ? 'bg-gradient-to-r from-purple-500/5 to-pink-500/5 border-purple-500/30' 
+                          ? 'bg-gradient-to-r from-cyan-500/5 to-pink-500/5 border-cyan-500/30' 
                           : 'bg-slate-900/10 border-white/5 hover:border-white/10'
                       }`}
                     >
                       <div className="flex items-start gap-2.5">
                         <div className={`mt-0.5 rounded border p-0.5 flex items-center justify-center transition-all ${
                           isChecked 
-                            ? 'bg-pink-500 border-pink-500 text-white' 
+                            ? 'bg-[#00E5FF] border-[#00E5FF] text-black font-bold' 
                             : 'border-slate-700 bg-[#020511]'
                         }`}>
                           <CheckCircle2 size={10} className={isChecked ? 'opacity-100' : 'opacity-0'} />
                         </div>
                         <div className="flex flex-col">
-                          <span className={`text-[10px] font-bold ${isChecked ? 'text-white' : 'text-slate-400'}`}>
+                          <span className={`text-[10px] font-bold ${isChecked ? (isDark ? 'text-white' : 'text-slate-900') : 'text-slate-400'}`}>
                             {item.label}
                           </span>
-                          <span className="text-[8px] text-[#A8A29E] font-mono">{item.detail}</span>
+                          <span className="text-[8px] text-slate-400 font-mono">{item.detail}</span>
                         </div>
                       </div>
 
                       {/* Benchmark Score indicator */}
-                      <span className={`text-[9px] font-mono font-bold ${isChecked ? 'text-pink-400' : 'text-slate-600'}`}>
+                      <span className={`text-[9px] font-mono font-bold ${isChecked ? 'text-[#00E5FF]' : 'text-slate-600'}`}>
                         {isChecked ? 'OPTIMAL' : 'LOCKED'}
                       </span>
                     </div>
@@ -508,7 +648,7 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
               {/* Backglow decor based on active node */}
               <div className="absolute top-0 right-0 w-80 h-80 opacity-10 pointer-events-none rounded-full blur-[80px]"
                 style={{
-                  background: `linear-gradient(135deg, ${activeNodeData.id === 'student' ? '#00E5FF' : activeNodeData.id === 'learner' ? '#8B5CF6' : activeNodeData.id === 'internship' ? '#EC4899' : '#10B981'}, transparent)`
+                  background: `linear-gradient(135deg, ${activeTrack === 'data-analytics' ? '#00E5FF' : '#EC4899'}, transparent)`
                 }}
               />
 
@@ -518,25 +658,22 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                 {/* Header Badge */}
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className={`text-[9px] font-mono px-3 py-1 rounded-full uppercase border font-bold bg-white/5 ${
-                    activeNodeData.id === 'student' ? 'text-[#00E5FF] border-[#00E5FF]/20' : 
-                    activeNodeData.id === 'learner' ? 'text-[#8B5CF6] border-[#8B5CF6]/20' : 
-                    activeNodeData.id === 'internship' ? 'text-[#EC4899] border-[#EC4899]/20' : 
-                    'text-[#10B981] border-[#10B981]/20'
+                    activeTrack === 'data-analytics' ? 'text-[#00E5FF] border-[#00E5FF]/20' : 'text-[#EC4899] border-[#EC4899]/20'
                   }`}>
                     {activeNodeData.badge}
                   </div>
 
-                  <div className="flex items-center gap-2 text-slate-500 font-mono text-[9px] uppercase">
-                    <Calendar size={11} className="text-pink-500" />
+                  <div className="flex items-center gap-2 text-slate-400 font-mono text-[9px] uppercase">
+                    <Calendar size={11} className={activeTrack === 'data-analytics' ? 'text-cyan-400' : 'text-pink-500'} />
                     <span>{activeNodeData.duration}</span>
                   </div>
                 </div>
 
                 {/* Primary Role Info */}
                 <div className="space-y-2">
-                  <span className="text-xs uppercase text-slate-500 tracking-wider block font-bold font-mono">ROLE SCANNER</span>
+                  <span className="text-xs uppercase text-slate-500 tracking-wider block font-bold font-mono">STAGE SCANNER</span>
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="text-2xl sm:text-4xl font-display font-black uppercase text-white tracking-tight">
+                    <h3 className={`text-2xl sm:text-3xl lg:text-4xl font-display font-black uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
                       {activeNodeData.role}
                     </h3>
                     <span className="text-sm font-semibold text-slate-400">@ {activeNodeData.company}</span>
@@ -552,8 +689,8 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
 
                 {/* Professional Summary Story */}
                 <div className="space-y-3">
-                  <span className="text-[10px] font-mono tracking-widest text-[#8B5CF6] uppercase block font-bold">PROFESSIONAL SUMMARY</span>
-                  <p className="text-sm text-slate-350 leading-relaxed font-sans">
+                  <span className="text-[10px] font-mono tracking-widest text-[#8B5CF6] uppercase block font-bold">PROFESSIONAL STAGE OVERVIEW</span>
+                  <p className={`text-sm leading-relaxed font-sans ${isDark ? 'text-slate-300' : 'text-slate-650'}`}>
                     {activeNodeData.summary}
                   </p>
                 </div>
@@ -561,13 +698,13 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                   {/* Skills Applied list */}
                   <div className="space-y-3">
-                    <span className="text-[10px] font-mono tracking-widest text-[#00E5FF] uppercase block font-bold">SKILLS APPLIED</span>
+                    <span className="text-[10px] font-mono tracking-widest text-[#00E5FF] uppercase block font-bold">SKILLS & TECHNOLOGIES</span>
                     <div className="flex flex-wrap gap-1.5">
                       {activeNodeData.skills.map((skill, idx) => (
                         <span 
                           key={idx}
                           onMouseEnter={playHover}
-                          className="text-[9px] font-mono font-bold px-2.5 py-1 rounded-md border border-white/5 bg-[#020511] text-slate-300 hover:border-pink-500/25 hover:text-white hover:shadow-[0_0_8px_rgba(236,72,153,0.15)] cursor-default transition-all"
+                          className="text-[9px] font-mono font-bold px-2.5 py-1 rounded-md border border-white/5 bg-[#020511] text-slate-300 hover:border-cyan-400/30 hover:text-white hover:shadow-[0_0_8px_rgba(0,229,255,0.15)] cursor-default transition-all"
                         >
                           {skill}
                         </span>
@@ -575,10 +712,10 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                     </div>
                   </div>
 
-                  {/* Learning Outcomes / Corporate Exposure details */}
+                  {/* Learning Outcomes / Applied Exposure details */}
                   <div className="space-y-3">
-                    <span className="text-[10px] font-mono tracking-widest text-[#EC4899] uppercase block font-bold">LEARNING OUTCOMES & IMPACT</span>
-                    <ul className="space-y-2.5 text-xs text-slate-400 font-sans">
+                    <span className="text-[10px] font-mono tracking-widest text-[#EC4899] uppercase block font-bold">APPLIED IMPACT & OUTCOMES</span>
+                    <ul className={`space-y-2.5 text-xs font-sans ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       {activeNodeData.outcomes.map((outcome, idx) => (
                         <li key={idx} className="flex gap-2 items-start text-[11px] leading-relaxed">
                           <CheckCircle2 size={13} className="text-[#10B981] flex-shrink-0 mt-0.5" />
@@ -594,8 +731,8 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
               {/* Bottom statistics and progression state */}
               <div className="mt-8 pt-6 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="space-y-1 bg-white/[0.01] p-3 rounded-2xl border border-white/5">
-                  <span className="text-[8px] text-slate-500 uppercase block font-mono">CAREER PHASE STATE</span>
-                  <span className="text-xs font-bold text-white uppercase tracking-tight font-mono">{activeNodeData.careerPhase}</span>
+                  <span className="text-[8px] text-slate-500 uppercase block font-mono">CAREER PHASE</span>
+                  <span className={`text-xs font-bold uppercase tracking-tight font-mono ${isDark ? 'text-white' : 'text-slate-900'}`}>{activeNodeData.careerPhase}</span>
                 </div>
 
                 {activeNodeData.growthMetrics.map((metric, idx) => (
@@ -605,9 +742,9 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                   </div>
                 ))}
 
-                <div className="space-y-1 bg-gradient-to-r from-pink-500/10 to-rose-500/10 p-3 rounded-2xl border border-pink-500/20 flex flex-col justify-center">
-                  <span className="text-[8px] text-pink-400 uppercase block font-mono font-bold tracking-wider">SYSTEM INTEGRITY</span>
-                  <span className="text-xs font-black text-white tracking-tight font-mono uppercase">OPTIMAL</span>
+                <div className="space-y-1 bg-gradient-to-r from-cyan-500/10 to-pink-500/10 p-3 rounded-2xl border border-cyan-500/20 flex flex-col justify-center">
+                  <span className="text-[8px] text-cyan-400 uppercase block font-mono font-bold tracking-wider">TRACK STATUS</span>
+                  <span className={`text-xs font-black tracking-tight font-mono uppercase ${isDark ? 'text-white' : 'text-slate-900'}`}>ACTIVE ROADMAP</span>
                 </div>
               </div>
 
@@ -621,9 +758,9 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
       <div className="space-y-6 pt-6">
         <div className="space-y-1">
           <span className="text-[10px] text-pink-400 font-bold tracking-widest block uppercase">APPLIED EXPERTISE MATRIX</span>
-          <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">Professional Capabilities</h3>
-          <p className="text-xs text-slate-400">
-            A comprehensive overview of competencies leveraged during academic projects and commercial industry assignments.
+          <h3 className={`text-xl sm:text-2xl font-black uppercase tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Professional Capabilities</h3>
+          <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            A comprehensive overview of competencies leveraged across Data Analytics, Machine Learning, and Full-Stack Web Development projects.
           </p>
         </div>
 
@@ -643,11 +780,11 @@ export default function ExperienceJourney({ theme = 'dark' }: ExperienceJourneyP
                   {hl.stat}
                 </span>
               </div>
-              <h4 className="text-sm font-extrabold uppercase text-white tracking-tight mb-1 flex items-center justify-between">
+              <h4 className={`text-sm font-extrabold uppercase tracking-tight mb-1 flex items-center justify-between ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 <span>{hl.title}</span>
                 <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all text-slate-400" />
               </h4>
-              <p className="text-[11px] text-slate-400 line-clamp-3 leading-relaxed">
+              <p className={`text-[11px] line-clamp-3 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 {hl.desc}
               </p>
             </div>
